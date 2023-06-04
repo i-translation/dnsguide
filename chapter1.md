@@ -1,12 +1,12 @@
 1 - The DNS protocol
 ====================
 
-We'll start out by investigating the DNS protocol and use our knowledge thereof
-to implement a simple client.
+We'll start out by investigating (研究) the DNS protocol and use our knowledge thereof (由此
+) to implement a simple client.
 
 Conventionally, DNS packets are sent using UDP transport and are limited to 512
 bytes. As we'll see later, both of those rules have exceptions: DNS can be used
-over TCP as well, and using a mechanism known as eDNS we can extend the packet
+over TCP as well, and using a mechanism (方法｜机制) known as eDNS we can extend the packet
 size. For now, we'll stick to the original specification, though.
 
 DNS is quite convenient in the sense that queries and responses use the same
@@ -18,9 +18,9 @@ packet looks as follows:
 | Section            | Size     | Type              | Purpose                                                                                                |
 | ------------------ | -------- | ----------------- | ------------------------------------------------------------------------------------------------------ |
 | Header             | 12 Bytes | Header            | Information about the query/response.                                                                  |
-| Question Section   | Variable | List of Questions | In practice only a single question indicating the query name (domain) and the record type of interest. |
+| Question Section   | Variable | List of Questions | In practice only a single question indicating (指示) the query name (domain) and the record type of interest. |
 | Answer Section     | Variable | List of Records   | The relevant records of the requested type.                                                            |
-| Authority Section  | Variable | List of Records   | An list of name servers (NS records), used for resolving queries recursively.                          |
+| Authority Section  | Variable | List of Records   | An list of name servers (NS records), used for resolving queries recursively (递归地).                          |
 | Additional Section | Variable | List of Records   | Additional records, that might be useful. For instance, the corresponding A records for NS records.    |
 
 Essentially, we have to support three different objects: Header, Question and
@@ -44,7 +44,7 @@ section is provided by the header. The header structure looks as follows:
 | NSCOUNT  | Authority Count      | 16 bits            | The number of entries in the Authority Section                                                                                                                                      |
 | ARCOUNT  | Additional Count     | 16 bits            | The number of entries in the Additional Section                                                                                                                                     |
 
-The question is quite a bit less scary:
+The question is quite a bit less scary (恐怖的｜吓人的):
 
 | Field  | Type           | Description                                                          |
 | ------ | -------------- | -------------------------------------------------------------------- |
@@ -56,8 +56,8 @@ The tricky part lies in the encoding of the domain name, which we'll return to
 later.
 
 Finally, we've got the records which are the meat of the protocol. Many record
-types exists, but for now we'll only consider a few essential. All records have
-the following preamble:
+types exists, but for now we'll only consider a few essential (本质的). All records have
+the following preamble (序言):
 
 | Field  | Type           | Description                                                                       |
 | ------ | -------------- | --------------------------------------------------------------------------------- |
@@ -75,7 +75,7 @@ most essential: the A record, mapping a name to an ip.
 | Preamble   | Record Preamble | The record preamble, as described above, with the length field set to 4.          |
 | IP         | 4-byte Integer  | An IP-address encoded as a four byte integer.                                      |
 
-Having gotten this far, let's get a feel for this in practice by performing
+Having gotten (得到) this far, let's get a feel for this in practice by performing
 a lookup using the `dig` tool:
 
 ```text
@@ -99,7 +99,7 @@ google.com.             204     IN      A       172.217.18.142
 ;; MSG SIZE  rcvd: 44
 ```
 
-We're using the `+noedns` flag to make sure we stick to the original format.
+We're using the `+noedns` flag to make sure we stick to (继续使用) the original format.
 There are a few things of note in the output above:
 
  * We can see that `dig` explicitly describes the header, question and answer
@@ -549,7 +549,7 @@ pub struct DnsHeader {
 }
 ```
 
-The implementation involves a lot of bit twiddling:
+The implementation involves a lot of bit twiddling (位处理):
 
 ```rust
 impl DnsHeader {
@@ -668,7 +668,7 @@ Having done the hard part of reading the domain names as part of our
 
 ### DnsRecord
 
-We'll obviously need a way of representing the actual dns records as well, and
+We'll obviously (明显地) need a way of representing the actual dns records as well, and
 again we'll use an enum for easy expansion:
 
 ```rust
@@ -851,4 +851,4 @@ A {
 }
 ```
 
-In the next chapter, we'll add network connectivity: [Chapter 2 - Building a stub resolver](/chapter2.md)
+In the next chapter, we'll add network connectivity（连通性）: [Chapter 2 - Building a stub resolver](/chapter2.md)
