@@ -152,7 +152,7 @@ pub enum DnsRecord {
 ```
 
 Here comes the bulk of the work. We'll need to extend the functions for writing
-and reading records. Starting with read, we amend it with additional code for
+and reading records. Starting with read, we amend (修正) it with additional code for
 each record type. First off, we've got the common preamble:
 
 ```rust
@@ -254,9 +254,9 @@ impl DnsRecord {
 }
 ```
 
-It's a bit of a mouthful, but there are no especially complicated records in
+It's a bit of a mouthful, but there are no especially complicated (复杂的) records in
 their own right -- it's seeing them all together that makes it look a bit
-unwieldy.
+unwieldy (笨拙的).
 
 ### Extending BytePacketBuffer for setting values in place
 
